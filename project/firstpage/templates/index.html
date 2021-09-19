@@ -1,0 +1,15 @@
+{% extends 'layout1.html' %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+<h1>สวัสดีคุุณ {{ request.user.first_name }} ,  คุณได้ทำการ login เข้าสู่ระบบแล้ว</h1>
+{% endif %}     
+
+<h1>Assignment 2 </h1>
+
+<p>สมาชิก : นายสุเมต คงแก้ว รหัสนักศึกษา 6210612559</p>
+    
+   
+    
+{% endblock %}

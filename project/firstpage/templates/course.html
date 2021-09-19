@@ -1,0 +1,16 @@
+
+
+
+{% extends 'layout1.html' %}
+
+{% block content %}
+<h1>All Subjects</h1>
+
+<ul>
+{% for subject in subjects %}
+    <li><a href="/course/{{subject.id}}">{{ subject }}</a></li>
+{% endfor %}
+</ul>
+
+{% endblock %}
+

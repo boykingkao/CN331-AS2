@@ -1,0 +1,37 @@
+{% extends 'layout1.html' %}
+
+
+
+{% block content %}
+<h1>Subject num : {{ subject.id }}</h1>
+
+<ul>
+    <li>Code : {{ subject.subject_code }}</li>
+    <li>Name : {{ subject.subject_name }}</li>
+    <li>Semester : {{ subject.subject_semester }}</li>
+    <li>Year : {{ subject.subject_year }}</li>
+    <li>Seat : {{ subject.subject_seat }}</li>
+</ul>
+
+
+
+<h3>คนที่ลงทะเบียนวิชานี้</h3>
+<ul>
+    {% for student in students %}
+    <li>{{ student }}</li>
+
+    {% empty %}
+    <li>ยังไม่มีคนลงทะเบียนวิชานี้</li>
+
+    {% endfor %}
+</ul>
+
+
+<h3><a href="/course/{{subject.id}}">ลงทะเบียนวิชานี้</a></h3>
+
+
+
+
+<p><a href="/course">back</a></p>
+
+{% endblock %}
