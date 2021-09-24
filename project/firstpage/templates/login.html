@@ -2,20 +2,28 @@
 
 {% block content %}
 
-<h1 align="center" , style="color: blue;">เข้าสู่ระบบ</h1>
+<h1 align="center" >
 
-<form action="login" method="post">
+{% for i in messages %}
+
+{{i}}
+
+{% endfor %}
+
+</h1>
+
+<form action="login" method="post" align = 'center'>
     {% csrf_token %}
     
     <h2>Username</h2>
     <input type="text" class="form-control" name="username" >
     <h2>Password</h2>
-    <input type="text" class="form-control" name="password" >
+    <input type="password" class="form-control" name="password" >
     <br>
     <br>
 
     <input type="submit" value="login" class="btn btn-primary">
-    <p>Create new account <a href="/register/">here</a></p>
+    
 
     
     

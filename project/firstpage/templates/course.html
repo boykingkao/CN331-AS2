@@ -4,13 +4,21 @@
 {% extends 'layout1.html' %}
 
 {% block content %}
-<h1>All Subjects</h1>
+<h1  align = 'center'>All Subjects
 
-<ul>
+
 {% for subject in subjects %}
-    <li><a href="/course/{{subject.id}}">{{ subject }}</a></li>
+    <li><a href="/course/{{subject.id}}">{{ subject.subject_code }} {{subject.subject_name}}</a></li>
 {% endfor %}
-</ul>
 
+
+
+{% if user.is_superuser %}
+    <p style="background-color: greenyellow; position:sticky;">user ของคุณมีสถานะ Admin สามารถเปิด/ปิด หรือตั้งค่าเกี่ยวกับวิชาได้</p>
+    
+    <a style="background-color: rgb(10, 255, 182); color: black;" href="/admin/firstpage/subject">ตรงนี้</a>
+{% endif %}
+
+</h1>
 {% endblock %}
 

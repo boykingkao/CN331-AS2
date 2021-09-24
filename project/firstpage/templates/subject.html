@@ -3,35 +3,65 @@
 
 
 {% block content %}
-<h1>Subject num : {{ subject.id }}</h1>
+
 
 <ul>
     <li>Code : {{ subject.subject_code }}</li>
     <li>Name : {{ subject.subject_name }}</li>
     <li>Semester : {{ subject.subject_semester }}</li>
     <li>Year : {{ subject.subject_year }}</li>
-    <li>Seat : {{ subject.subject_seat }}</li>
+    <li>Seat : {{seat_left}}/{{ subject.subject_seat }}{% if seat_left == 0 %}
+        (คนเต็ม)
+        {% endif %}</li>
+    <li>สถานะ : {% if seat_left != 0 and subject.status == 1 %}
+        <p style="color : darkgreen; border:darkblue; border-width:5px; border-style:solid; position:absolute">
+            เปิดการลงทะเบียน </p>
+        {% else %}
+        <p style="color : darkred; border:darkblue; border-width:5px; border-style:solid; position:absolute">
+            ปิดการลงทะเบียน </p>
+        {% endif %}
+
+    </li>
+
 </ul>
 
-
+<br>
 
 <h3>คนที่ลงทะเบียนวิชานี้</h3>
 <ul>
-    {% for student in students %}
-    <li>{{ student }}</li>
+    {% for i in students %}
+    <li>{{ i }}</li>
 
     {% empty %}
     <li>ยังไม่มีคนลงทะเบียนวิชานี้</li>
 
     {% endfor %}
+
+
 </ul>
 
+{% if subject.status == 1 %}
+    
+    {% if user in subject.students.all and user.is_authenticated %}
+        <h3><a href="{% url 'remove' subject.id %}">ถอนวิชานี้</a></h3>
+    {% elif user not in subject.students.all and seat_left != 0 and user.is_authenticated %}
+        <h3><a href="{% url 'register' subject.id %}">ลงทะเบียนวิชานี้</a></h3>
+    
+    {% endif %}
 
-<h3><a href="/course/{{subject.id}}">ลงทะเบียนวิชานี้</a></h3>
+{% else %}
+*ไม่เปิดให้เพิ่ม/ถอน*
+{% endif %}
 
+{% if not user.is_authenticated %}
+    <h3><a href="{% url 'remove' subject.id %}">ถอนวิชานี้</a></h3>
+    <h3><a href="{% url 'register' subject.id %}">ลงทะเบียนวิชานี้</a></h3>
 
-
+{% endif %}
 
 <p><a href="/course">back</a></p>
+
+
+
 
 {% endblock %}

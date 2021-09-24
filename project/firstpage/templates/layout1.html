@@ -24,7 +24,9 @@ a:hover, a:active {
 <br>
 
 {% if user.is_authenticated %}
-<a a href="/logout" target="_self">ออกจากระบบ</a>
+
+
+<a a href="{% url 'logout' %}" target="_self">ออกจากระบบ</a>
 <br>
 
  
@@ -40,7 +42,7 @@ a:hover, a:active {
 <a href="/loginPage" target="_self">ล็อคอิน</a>
 <br>
 
-<a href="/register" target="_self">ลงทะเบียนผู้ใช้งาน</a>
+
 {%endif%}
 {% block content %}
 

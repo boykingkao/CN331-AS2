@@ -5,7 +5,7 @@ from django.contrib.auth.models import User,auth
 from django.contrib import messages
 from django.urls import reverse
 
-from .models import  subject
+from .models import Subject
 
 # Create your views here.
 
@@ -16,14 +16,19 @@ def index(request):
 
 def course(request):
     return render(request,"course.html",{  
-        "subjects" : subject.objects.all()
+        "subjects" : Subject.objects.all()
     })
 
 def course_subject(request, subject_id):
-    Subject = subject.objects.get(pk=subject_id)
+    Subjects = Subject.objects.get(pk=subject_id)
+   
     return render(request,"subject.html",{
-        'subject' : Subject,
-        'students' : Subject.students.all(),
+        "test" : {"goh", "za", "lol"},
+        'subject' : Subjects,
+        'students' : Subjects.students.all(),
+        'count' : Subjects.students.count(),
+        'seat_left' : Subjects.subject_seat - Subjects.students.count() ,
+        
         #'non_student' : student.objects.exclude(subjects=Subject).all()
 
     })
@@ -53,10 +58,11 @@ def login(request):
 
         if user is not None:
             auth.login(request, user)
-            return redirect('/')
+            return redirect('/course')
         
         else:
-            return HttpResponse("มั่ว")    
+            messages.info(request,"Username หรือ Password ผิด กรุณากรอกใหม่")
+            return redirect('/loginPage') 
 
     else:
         return render(request,"index.html")     
@@ -67,10 +73,29 @@ def logoutAcc(request):
 
 def registered(request, subject_id):
     if not request.user.is_authenticated :
-        return render(request,"login.html")
+        #messages.warning(request, "Please Login")
+        #return HttpResponseRedirect(reverse("login")+f"?next={request.path}")
+        messages.info(request,"โปรด Login ก่อนทำการลงทะเบียนรายวิชา")
+        return redirect("/loginPage")
 
-    Subject = get_object_or_404(subject, pk = subject_id)  
+    subject = get_object_or_404(Subject, pk = subject_id)  
     if request.user not in subject.students.all():
         subject.students.add(request.user)
        
-        return redirect('/')
+        return redirect('/course')
+
+
+def remove(request, subject_id):
+    if not request.user.is_authenticated :
+        #messages.warning(request, "Please Login")
+        #return HttpResponseRedirect(reverse("login")+f"?next={request.path}")
+        messages.info(request,"โปรด Login ก่อนทำการถอนรายวิชา")
+        return redirect("/loginPage")
+
+    subject = get_object_or_404(Subject, pk = subject_id)  
+    if request.user in subject.students.all():
+        subject.students.remove(request.user)       
+        return redirect('/course')
+
+
+
