@@ -32,7 +32,7 @@ class UserTestCase(TestCase):
         response = c.get(reverse("login"))
         self.assertEqual(response.status_code, 200)
 
-    #ยังไม่เสร็จ
+    
     def test_login_view_successful(self):
         '''logged in succe'''
         c = Client()
@@ -49,8 +49,6 @@ class UserTestCase(TestCase):
         user = User.objects.get(username="user1")  
         response = c.post(reverse('login'),{'username' : 'user1', 'password' : ""})
         self.assertEqual(response.status_code, 302)
-
-
 
        
 
@@ -69,13 +67,11 @@ class UserTestCase(TestCase):
         '''logout page view'''
         c = Client()
         user = User.objects.get(username="user1")  
-    
-        c.logout()
-        response = c.get('/')
-        self.assertEqual(response.status_code, 302)
+        response = c.get(reverse('index'))
+        self.assertEqual(response.status_code , 302)
     
 
-    
+
     #ยังไม่เสร็จ
     def test_registered_not_logged_in(self):
         '''still not logged in'''
