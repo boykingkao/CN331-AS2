@@ -126,3 +126,8 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 SOCIAL_AUTH_URL_NAMESPACE = 'firstpage'
+ 
+
+#สำหรับใช้push ให้ heroku
+#import django_heroku
+#django_heroku.settings(local())

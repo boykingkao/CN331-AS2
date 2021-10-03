@@ -24,9 +24,9 @@ urlpatterns = [
     path('', views.index, name = 'index' ),
     path('loginPage/',views.loginPage),
     path('loginPage/login',views.login, name= 'login'),
-    path('writemessage/',views.writemessage),
+    
     path("logout",views.logoutAcc, name="logout"),
-    path('writemessage/result',views.result), 
+    
     path('course/',views.course, name ='course'), 
     path('course/<int:subject_id>', views.course_subject, name = 'subject'),  
     path('course/<int:subject_id>/regis', views.registered, name= 'register'), 
